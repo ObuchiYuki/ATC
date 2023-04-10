@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+
+#define rep(i, to) for (int i=0; i<to; i++)
+#define repr(i, from, to) for (int i=from; i<to; i++)
+
+using namespace std;
+using ll = long long;
+using P = pair<int, int>;
+
+#ifdef DEBUG
+#include "debug.hpp"
+#else
+template<class T> void print(T v) { cout << v << endl; }
+void _main(); int main() { _main(); }
+#endif
+
+// ================================================================================ //
+
+const int w = 1001;
+const int W = 1 << 31 - 1;
+struct s {
+    int to, next;
+} e[w*w];
+
+queue<int> q;
+int y, k, a[w][w],b[w],c[w];
+
+void add(int i, int j) {
+    e[y].to = j;
+    e[y].next = b[i];
+    b[i] = y++;
+}
+
+int bfs() {
+    memset(c, 0, sizeof(c));
+    c[0] = 1;
+    int i, j, t;
+    q.push(0);
+    while (q.size()) {
+        j = q.front();
+        q.pop();
+        
+        for (i = b[j]; i != -1; i = e[i].next) {
+            t = e[i].to;
+            if (!c[t] && a[j][t] > 0) {
+                c[t] = c[j] + 1;
+                q.push(t);
+            }
+        }
+    }
+    
+    return c[k-1];
+}
+
+int dfs(int n, int m) {
+    if (n == k-1) return m;
+    int i, j, t, f = m;
+    for (i = b[n]; i != -1; i = e[i].next) {
+        t = e[i].to;
+        if (c[t] == c[n]+1 && a[n][t] > 0) {
+            j = dfs(t, min(m, a[n][t]));
+            a[n][t] -= j;
+            a[t][n] += j;
+            m -= j;
+        }
+    }
+    return f-m;
+}
+
+void _main() {
+    cin >> k;
+    rep(i, k) cin >> c[i];
+    sort(c, c+k);
+    y = 0;
+    memset(a, 0, sizeof(a));
+    memset(b, -1, sizeof(b));
+    
+    for (int i=0; i<k-1; i++) for (int j=i+1; j<k; j++) {
+        int n = gcd(c[i], c[j]);
+        if (n != 1) {
+            a[i][j] = n;
+            add(i, j);
+            a[j][i] = n;
+            add(j, i);
+        }
+    }
+    
+    int m = 0;
+    while (bfs()) {
+        m += dfs(0, W);
+    }
+    print(m);
+}
+

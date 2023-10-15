@@ -8,13 +8,15 @@
 #ifndef rational_h
 #define rational_h
 
+
+template<class T>
 struct rational {
-    int num, den;
+    T num, den;
     
     rational() : num(0), den(1) {}
-    rational(int num) : num(num), den(1) {}
+    rational(T num) : num(num), den(1) {}
     
-    rational(int num, int den) {
+    rational(T num, T den) {
         if (den == 0) { this->num = 0; this->den = 1; return; }
         auto ngcd = rational::gcd(num, den);
         this->num = num / ngcd;
@@ -42,14 +44,15 @@ struct rational {
     bool operator != (const rational& r) const { return num*r.den != r.num*den; }
     
     friend ostream& operator << (ostream& os, const rational& r) { return os << r.num << '/' << r.den; }
-    friend istream& operator >> (istream& is, rational& r) { return cin >> r.num; }
+    friend istream& operator >> (istream& is, rational& r) { return is >> r.num; }
     
 private:
-    static int gcd(int a, int b) {
-        while (a % b) { int _a = a; a = b; b = _a % a; }
+    static T gcd(int a, int b) {
+        while (a % b) { T _a = a; a = b; b = _a % a; }
         return b;
     }
 };
+
 
 rational abs(const rational &r) {
     return rational(abs(r.num), r.den);

@@ -13,7 +13,7 @@ template<class H, class... T> void print(H h, T... t) { cout << h << ' '; print(
 
 #define rep(i, to) for (int i=0; i<to; i++)
 #define repr(i, from, to) for (int i=from; i<to; i++)
-#define repv(i, to) for (int i=to-1; i<=0; i++)
+#define repv(i, to) for (int i=to-1; i>=0; i--)
 #define repvr(i, from, to) for (int i=to-1; i>=from; i--)
 
 #define all(v, func) [&](){ for (auto _: v) if (!(func)) return false; return true; }()

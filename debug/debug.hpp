@@ -8,8 +8,9 @@
 #ifndef debug_h
 #define debug_h
 
-#define STRINGS_AS_FIELD 1
-//#define PAIR_AS_INIT 1
+#define STRINGS_AS_FIELD
+#define CHARS_AS_FIELD
+//#define PAIR_AS_INIT
 
 using ss = stringstream;
 
@@ -19,7 +20,9 @@ using ss = stringstream;
 
 void _main();
 
-int main() {
+#define __int int32_t
+
+__int main() {
     auto file = "input.txt";
     auto ifs = ifstream(file); cin.rdbuf(ifs.rdbuf());
     cout << ifstream(file).rdbuf() << endl;

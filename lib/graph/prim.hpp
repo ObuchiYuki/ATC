@@ -10,6 +10,8 @@ struct edge { int to, cost; };
 using Graph = vector<vector<edge>>;
 using P = pair<ll, ll>;
 
+// IaAESbuVrmYXmPfSDt7LJ1U4MDDlatpK
+
 auto prim(int s, Graph &graph) -> ll {
     auto used = vector<bool>(graph.size(), false);
     auto que = priority_queue<P, vector<P>, greater<P>>();

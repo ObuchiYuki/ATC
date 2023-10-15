@@ -33,6 +33,8 @@ template<class T> void desc(ss &s, vector<T> v);
 template<class T, class U> void desc(ss &s, pair<T, U> v);
 template<class T, class C> void desc(ss &s, multiset<T, C> v);
 template<class T> void desc(ss &s, unordered_set<T> v);
+template<class T, class U> void desc(ss &s, map<T, U> v);
+template<class T, class U> void desc(ss &s, unordered_map<T, U> v);
 template<class T, class C> void desc(ss &s, set<T, C> v);
 template<class T> void desc(ss &s, queue<T> v);
 template<class T, class C, class P> void desc(ss &s, priority_queue<T, C, P> v);
@@ -65,6 +67,37 @@ template<class K, class V> void desc(ss &s, map<K, V> v) {
 template<class T> void desc(ss &s, vector<vector<T>> v) {
     s << "{" << endl; for(auto t: v) { s << "\t"; desc(s, t); s << endl; } s << "}";
 }
+template<class T> void desc(ss &s, vector<vector<vector<T>>> v) {
+    s << "{" << endl;
+    for(auto &t1: v) {
+        s << "\t{" << endl;
+        for(auto &t2: t1) {
+            s << "\t\t";
+            desc(s, t2);
+            s << endl;
+        }
+        s << "\t}" << endl;
+    }
+    s << "}";
+}
+
+template<class T> void desc(ss &s, vector<vector<vector<vector<T>>>> v) {
+    s << "{" << endl;
+    for (auto &t1: v) {
+        s << "\t{" << endl;
+        for (auto &t2: t1) {
+            s << "\t\t{" << endl;
+            for (auto &t3: t2) {
+                s << "\t\t\t";
+                desc(s, t3);
+                s << endl;
+            }
+            s << "\t\t}" << endl;
+        }
+        s << "\t}" << endl;
+    }
+    s << "}";
+}
 template<class K, class V> void desc(ss &s, unordered_map<K, V> v) {
     desc(s, map(v.begin(), v.end()));
 }
@@ -96,6 +129,15 @@ template<class T> void desc(ss &s, stack<T> v) {
 #ifdef STRINGS_AS_FIELD
 auto desc(ss &s, vector<string> v) {
     for(auto &t: v) { desc(s, t); s << endl; }
+}
+#endif
+
+#ifdef CHARS_AS_FIELD
+auto desc(ss &s, vector<vector<char>> v) {
+    for (auto &row: v) {
+        for (auto &c: row) cout << c;
+        cout << endl;
+    }
 }
 #endif
 

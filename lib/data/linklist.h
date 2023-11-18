@@ -8,12 +8,13 @@
 #ifndef linklist_h
 #define linklist_h
 
+template <class T>
 struct node {
-    int x;
+    T x;
     node *right;
     node *left;
     
-    node(int _x) : x(_x), right(nullptr), left(nullptr) {}
+    node(T _x) : x(_x), right(nullptr), left(nullptr) {}
     
     void insert_left(node *node) {
         if (this->left) this->left->right = node;
@@ -30,7 +31,8 @@ struct node {
     }
 };
 
-void desc(node* node) {
+template <class T>
+void desc(node<T>* node) {
     auto head = node;
     while (head->left) head = head->left;
     while (head) { cout << head->x << " "; head = head->right; }

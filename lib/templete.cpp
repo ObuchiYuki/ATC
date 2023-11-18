@@ -61,3 +61,6 @@ P max(P p0, P p1) {
 P min(P p0, P p1) {
     return { min(p0.first, p1.first), min(p0.second, p1.second) };
 }
+
+template<class T>
+using heap = priority_queue<T, vector<T>, greater<T>>;

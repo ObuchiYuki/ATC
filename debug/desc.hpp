@@ -26,7 +26,7 @@ template<class T> auto desc(ss &s, T v) -> typename enable_if<has_desc<T>::value
     v.desc(s);
 }
 template<class T> auto desc(ss &s, T v) -> typename enable_if<!has_desc<T>::value and !has_sout<T>::value, void>::type {
-    s << "<" << simple_demangle(typeid(v).name()) << " with " << sizeof(T) << "bytes" << ">";
+    s << "<" << simple_demangle(typeid(v).name()) << " with " << sizeof(T) << " bytes" << ">";
 }
 
 template<class T> void desc(ss &s, vector<T> v);
@@ -43,6 +43,13 @@ template<class... A> void desc(ss &s, tuple<A...> v);
 void desc(ss &s, bool v) {
     s << (v ? "true" : "false");
 }
+
+#ifdef CHAR_AS_INT
+void desc(ss &s, char v) {
+    s << +v;
+}
+#endif
+
 void desc(ss &s, string v) {
     s << v;
 }

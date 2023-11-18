@@ -49,15 +49,21 @@ ll nHr(int n, int r) {
 //}
 
 template<class F>
-void comb(int n, int r, F func) {
-    vector<int> indices(r);
-    int start = 0, cur = 0;
-    
-    while (cur >= 0) {
-        repr(i, start, n) {
-            indices[cur++] = i;
-            if (cur == r) { func(indices); break; }
-        }
-        start = indices[--cur] + 1;
+void combUtil(int n, int r, int index, vector<int>& data, int i, F func) {
+    if (index == r) {
+        func(data);
+        return;
     }
+
+    if (i >= n) return;
+
+    data[index] = i;
+    combUtil(n, r, index + 1, data, i + 1, func);
+    combUtil(n, r, index, data, i + 1, func);
+}
+
+template<class F>
+void comb(int n, int r, F func) {
+    vector<int> data(r);
+    combUtil(n, r, 0, data, 0, func);
 }

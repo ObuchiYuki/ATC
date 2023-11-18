@@ -10,6 +10,7 @@
 
 #define STRINGS_AS_FIELD
 #define CHARS_AS_FIELD
+//#define CHAR_AS_INT
 //#define PAIR_AS_INIT
 
 using ss = stringstream;
